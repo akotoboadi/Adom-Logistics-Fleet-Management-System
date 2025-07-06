@@ -6,6 +6,9 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("🚚 Welcome to Adom Logistics Fleet Management System 🚚");
 
+        VehicleManager.loadFromFile();
+        DriverManager.loadFromFile();
+
         boolean exit = false;
         while (!exit) {
             System.out.println("\n==== Main Menu ====");
@@ -37,6 +40,8 @@ public class Main {
                     FuelReportGenerator.generateReport();
                     break;
                 case 6:
+                    VehicleManager.saveToFile();
+                    DriverManager.saveToFile();
                     exit = true;
                     System.out.println("Goodbye!");
                     break;
@@ -44,5 +49,6 @@ public class Main {
                     System.out.println("Invalid choice. Try again.");
             }
         }
+
     }
 }

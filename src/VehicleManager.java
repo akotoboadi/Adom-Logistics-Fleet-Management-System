@@ -175,4 +175,42 @@ public class VehicleManager {
         return searchByReg(node.right, reg);
     }
 
+    public static void loadFromFile() {
+        try (Scanner fileScanner = new Scanner(new java.io.File("vehicles.txt"))) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                    String reg = parts[0];
+                    String type = parts[1];
+                    int mileage = Integer.parseInt(parts[2]);
+                    double fuel = Double.parseDouble(parts[3]);
+                    String driverID = parts[4];
+
+                    Vehicle vehicle = new Vehicle(reg, type, mileage, fuel, driverID);
+                    root = insert(root, vehicle);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("(Info) No existing vehicles.txt found or error reading it.");
+        }
+    }
+
+    public static void saveToFile() {
+        try (java.io.PrintWriter writer = new java.io.PrintWriter("vehicles.txt")) {
+            saveInOrder(root, writer);
+        } catch (Exception e) {
+            System.out.println("Error saving vehicles to file: " + e.getMessage());
+        }
+    }
+
+    private static void saveInOrder(VehicleNode node, java.io.PrintWriter writer) {
+        if (node != null) {
+            saveInOrder(node.left, writer);
+            Vehicle v = node.vehicle;
+            writer.println(v.regNumber + "," + v.type + "," + v.mileage + "," + v.fuelUsage + "," + v.driverID);
+            saveInOrder(node.right, writer);
+        }
+    }
+
 }
