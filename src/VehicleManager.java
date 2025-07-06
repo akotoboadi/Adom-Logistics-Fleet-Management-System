@@ -11,8 +11,10 @@ public class VehicleManager {
             System.out.println("\n== Vehicle Database Menu ==");
             System.out.println("1. Add Vehicle");
             System.out.println("2. Search Vehicle by Mileage");
-            System.out.println("3. Display All Vehicles (Sorted by Mileage)");
-            System.out.println("4. Back to Main Menu");
+            System.out.println("3. Search Vehicle by Registration Number");
+            System.out.println("4. Display All Vehicles (Sorted by Mileage)");
+            System.out.println("5. Remove Vehicle by Mileage");
+            System.out.println("6. Back to Main Menu");
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -25,9 +27,15 @@ public class VehicleManager {
                     searchVehicle();
                     break;
                 case 3:
-                    displayVehicles();
+                    searchByReg();
                     break;
                 case 4:
+                    displayVehicles();
+                    break;
+                case 5:
+                    removeVehicle();
+                    break;
+                case 6:
                     back = true;
                     break;
                 default:
@@ -100,4 +108,71 @@ public class VehicleManager {
             inOrderTraversal(node.right);
         }
     }
+
+    private static void removeVehicle() {
+        System.out.print("Enter mileage of vehicle to remove: ");
+        int mileage = scanner.nextInt();
+        scanner.nextLine();
+
+        root = remove(root, mileage);
+        System.out.println("Vehicle removed (if it existed).");
+    }
+
+    private static VehicleNode remove(VehicleNode node, int mileage) {
+        if (node == null)
+            return null;
+
+        if (mileage < node.vehicle.mileage) {
+            node.left = remove(node.left, mileage);
+        } else if (mileage > node.vehicle.mileage) {
+            node.right = remove(node.right, mileage);
+        } else {
+            // Node found
+            if (node.left == null)
+                return node.right;
+            if (node.right == null)
+                return node.left;
+
+            // Node with 2 children: find inorder successor
+            VehicleNode successor = minValueNode(node.right);
+            node.vehicle = successor.vehicle;
+            node.right = remove(node.right, successor.vehicle.mileage);
+        }
+        return node;
+    }
+
+    private static VehicleNode minValueNode(VehicleNode node) {
+        VehicleNode current = node;
+        while (current.left != null)
+            current = current.left;
+        return current;
+    }
+
+    private static void searchByReg() {
+        System.out.print("Enter registration number to search: ");
+        String reg = scanner.nextLine();
+
+        Vehicle found = searchByReg(root, reg);
+        if (found != null) {
+            System.out.println("Vehicle found: " + found);
+        } else {
+            System.out.println("Vehicle not found.");
+        }
+    }
+
+    private static Vehicle searchByReg(VehicleNode node, String reg) {
+        if (node == null)
+            return null;
+
+        if (node.vehicle.regNumber.equalsIgnoreCase(reg)) {
+            return node.vehicle;
+        }
+
+        Vehicle leftResult = searchByReg(node.left, reg);
+        if (leftResult != null)
+            return leftResult;
+
+        return searchByReg(node.right, reg);
+    }
+
 }
