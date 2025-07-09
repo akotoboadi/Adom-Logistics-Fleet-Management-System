@@ -16,7 +16,9 @@ public class DriverManager {
             System.out.println("2. Assign Driver");
             System.out.println("3. Show Available Drivers");
             System.out.println("4. Show Assigned Drivers");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("5. Record Driver Activity");
+            System.out.println("6. Show Assigned Drivers and Activity Logs");
+            System.out.println("7. Back to Main Menu");
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -35,8 +37,15 @@ public class DriverManager {
                     showAssignedDrivers();
                     break;
                 case 5:
+                    recordActivity();
+                    break;
+                case 6:
+                    showDriverActivities();
+                    break;
+                case 7:
                     back = true;
                     break;
+
                 default:
                     System.out.println("Invalid choice.");
             }
@@ -91,6 +100,47 @@ public class DriverManager {
         }
     }
 
+    private static void showDriverActivities() {
+        if (assignedDrivers.isEmpty()) {
+            System.out.println("No assigned drivers.");
+            return;
+        }
+
+        System.out.println("\n-- Assigned Drivers and Activity Logs --");
+        for (Driver d : assignedDrivers) {
+            System.out.println(d); // prints basic info
+
+            if (!d.assignedRoutes.isEmpty()) {
+                System.out.println("   Routes:");
+                for (String r : d.assignedRoutes) {
+                    System.out.println("      • " + r);
+                }
+            } else {
+                System.out.println("   Routes: None");
+            }
+
+            if (!d.delays.isEmpty()) {
+                System.out.println("   Delays:");
+                for (String delay : d.delays) {
+                    System.out.println("      • " + delay);
+                }
+            } else {
+                System.out.println("   Delays: None");
+            }
+
+            if (!d.infractions.isEmpty()) {
+                System.out.println("   Infractions:");
+                for (String infraction : d.infractions) {
+                    System.out.println("      • " + infraction);
+                }
+            } else {
+                System.out.println("   Infractions: None");
+            }
+
+            System.out.println();
+        }
+    }
+
     public static void saveToFile() {
         try (java.io.PrintWriter writer = new java.io.PrintWriter("drivers.txt")) {
             for (Driver d : availableDrivers) {
@@ -128,6 +178,41 @@ public class DriverManager {
         } catch (Exception e) {
             System.out.println("(Info) No existing drivers.txt found or error reading it.");
         }
+    }
+
+    private static void recordActivity() {
+        System.out.print("Enter driver ID: ");
+        String id = scanner.nextLine();
+
+        for (Driver d : assignedDrivers) {
+            if (d.driverID.equalsIgnoreCase(id)) {
+                System.out.println("1. Add Route");
+                System.out.println("2. Add Delay");
+                System.out.println("3. Add Infraction");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter route: ");
+                        d.addRoute(scanner.nextLine());
+                        break;
+                    case 2:
+                        System.out.print("Enter delay: ");
+                        d.addDelay(scanner.nextLine());
+                        break;
+                    case 3:
+                        System.out.print("Enter infraction: ");
+                        d.addInfraction(scanner.nextLine());
+                        break;
+                    default:
+                        System.out.println("Invalid choice.");
+                }
+                System.out.println("Activity recorded.");
+                return;
+            }
+        }
+        System.out.println("Driver not found among assigned drivers.");
     }
 
 }

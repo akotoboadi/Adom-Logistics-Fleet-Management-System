@@ -4,7 +4,7 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println("🚚 Welcome to Adom Logistics Fleet Management System 🚚");
+        System.out.println(" Welcome to Adom Logistics Fleet Management System ");
 
         VehicleManager.loadFromFile();
         DriverManager.loadFromFile();

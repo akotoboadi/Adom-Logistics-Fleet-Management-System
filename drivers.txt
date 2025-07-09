@@ -1,2 +1,4 @@
-D001,Akoto,5,Dansoman,available
-D002,Aboagye,3,Legon,available
+D001,Akoto,5,Dansoman,assigned
+D001,Kwame,5,Dansoman,assigned
+D002,Frimpong,3,Tepa,assigned
+D002,Aboagye,3,Legon,assigned
