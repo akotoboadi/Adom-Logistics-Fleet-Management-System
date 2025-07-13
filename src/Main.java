@@ -5,9 +5,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println(" Welcome to Adom Logistics Fleet Management System ");
-
         VehicleManager.loadFromFile();
         DriverManager.loadFromFile();
+        DeliveryManager.loadFromFile();
 
         boolean exit = false;
         while (!exit) {
@@ -42,6 +42,7 @@ public class Main {
                 case 6:
                     VehicleManager.saveToFile();
                     DriverManager.saveToFile();
+                    DeliveryManager.saveToFile();
                     exit = true;
                     System.out.println("Goodbye!");
                     break;
