@@ -1,4 +1,4 @@
-D001,Akoto,5,Dansoman,assigned
 D001,Kwame,5,Dansoman,assigned
 D002,Frimpong,3,Tepa,assigned
-D002,Aboagye,3,Legon,assigned
+D003,Aboagye,7,Tarkwa,assigned
+D004,Fredrick,1,Tema,assigned

@@ -1,8 +1,11 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class VehicleManager {
     static VehicleNode root = null;
     static Scanner scanner = new Scanner(System.in);
+    public static Map<String, Vehicle> vehicles = new HashMap<>();
 
     public static void menu() {
         boolean back = false;
@@ -189,6 +192,7 @@ public class VehicleManager {
 
                     Vehicle vehicle = new Vehicle(reg, type, mileage, fuel, driverID);
                     root = insert(root, vehicle);
+                    vehicles.put(reg, vehicle);
                 }
             }
         } catch (Exception e) {

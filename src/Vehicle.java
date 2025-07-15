@@ -7,9 +7,10 @@ public class Vehicle {
     int mileage;
     double fuelUsage;
     String driverID;
+    int lastServiceMileage;
 
-    // New field: maintenance history (part → cost)
-    Map<String, Double> maintenanceHistory = new HashMap<>();
+    // maintenance history (part → cost)
+    public Map<String, Double> maintenanceHistory = new HashMap<>();
 
     public Vehicle(String regNumber, String type, int mileage, double fuelUsage, String driverID) {
         this.regNumber = regNumber;
@@ -17,11 +18,18 @@ public class Vehicle {
         this.mileage = mileage;
         this.fuelUsage = fuelUsage;
         this.driverID = driverID;
+        this.lastServiceMileage = 0; // initially assume no service yet
+    }
+
+    public void addMaintenance(String part, double cost) {
+        maintenanceHistory.put(part, cost);
+        this.lastServiceMileage = this.mileage; // reset service mileage
     }
 
     @Override
     public String toString() {
-        return String.format("Reg: %s | Type: %s | Mileage: %d | Fuel: %.2f | Driver: %s ",
-                regNumber, type, mileage, fuelUsage, driverID);
+        return String.format(
+                "Reg: %s | Type: %s | Mileage: %d | Last Service: %d | Fuel: %.2f | Driver: %s | Maintenance Records: %d",
+                regNumber, type, mileage, lastServiceMileage, fuelUsage, driverID, maintenanceHistory.size());
     }
 }
