@@ -9,7 +9,6 @@ public class Main {
         DriverManager.loadFromFile();
         DeliveryManager.loadFromFile();
         MaintenanceManager.loadFromFile();
-        System.out.println("DEBUG: vehicles loaded = " + VehicleManager.vehicles.size());
 
         boolean exit = false;
         while (!exit) {

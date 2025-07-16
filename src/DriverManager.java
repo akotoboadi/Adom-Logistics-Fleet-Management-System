@@ -108,7 +108,7 @@ public class DriverManager {
 
         System.out.println("\n-- Assigned Drivers and Activity Logs --");
         for (Driver d : assignedDrivers) {
-            System.out.println(d); // prints basic info
+            System.out.println(d); 
 
             if (!d.assignedRoutes.isEmpty()) {
                 System.out.println("   Routes:");
